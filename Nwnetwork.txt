@@ -94,3 +94,86 @@
     ]
 }
 }
+
+
+
+
+
+
+
+
+//  initMap(){
+//     // this.map = L.map('map', {
+//     //   center: [39.8282, -98.5795],
+//     //   zoom: 3
+//     // });
+
+//     const globalMap = L.map('map', {
+//       zoomControl: true,
+//       center: [28.7041, 77.1025],
+//       maxZoom: 21,
+//       minZoom: 4
+//     }).setView([28.7041, 77.1025], 13);
+//     globalMap.zoomControl.setPosition('bottomright');
+//     const maplayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&hl=tr&x={x}&y={y}&z={z}', {
+//       subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+//       maxNativeZoom: 21,
+//       zIndex: 0,
+//       maxZoom: 21
+//     }).addTo(globalMap);
+//   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+renderMap() {
+
+  var tempData;
+  // // document.getElementById("map").outerHTML = "";
+  tempData = this.response;
+  //For LeafLet chart
+  this.dataPoint = tempData;
+  // console.log(this.dataPoint)
+  this.map = L.map("map")//.setView([12.9715987, 77.5945627], 12);
+  this.options = {
+    layers: [
+      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+    ],
+    zoom: 4,
+    center: L.latLng({ lat: 12.9715987, lng: 77.5945627 }),
+    // center:L.map("map").setView([12.9715987, 77.5945627], 12)
+  };
+  // store all the coordinates in this array o be able to iterate over the markers array
+  // let coordinates = [];
+  // populate coordinates array with all the markers;
+
+  //  var data1 = this.dataPoint
+  //   var data2 = this.dataPoint
+  //   console.log(data1, data2)
+    for(const i in this.dataPoint){
+      // console.log(i)
+      this.coordinates.push([(this.dataPoint[i].latitude), (this.dataPoint[i].longitude)]);
+  };
+
+
+  console.log(this.coordinates);
+  // visualize the markers on the map
+  for (const i in this.coordinates) {
+    console.log(this.coordinates[i])
+
+    L.marker([this.coordinates]).addTo(this.map)
+      .bindPopup("<b>Latitude:</b> " + this.coordinates[i][0] + " <b>Longitude:</b> " + this.coordinates[i][1]);
+  };
+  console.log(coordinates);
+}

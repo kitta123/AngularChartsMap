@@ -7,137 +7,144 @@ declare let L;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  private map;
-  options : any;
+
+  dataPoint: any;
+  coordinates: any = [];
+  mapLink: any;
+  marker: any;
 
   constructor() { }
 
-  response = {
-    "ions": {
-      "City A": {
-        "Position": {
-          "Longitude": 9.96233,
-          "Latitude": 49.80404
-        }
+  response = [{
+    "ions": [
+      {
+        "id": 1,
+        "hex_id": null,
+        "serial_no": "420",
+        "s_number": "00:00:00:00:00:00:00:00:00:00:01:11:00:00:01:a4",
+        "cnid": "98:6a:08:00",
+        "name": "420",
+        "version": "10.0.5_R_9437027",
+        "authentication_successful": true,
+        "system_package_version": "10.0.5_R_9437027",
+        "quality_score": null,
+        "ul_capacity_score": null,
+        "dl_capacity_score": null,
+        "uptime": null,
+        "location": "Bangalore, Karnataka, India",
+        "latitude": "12.9715987",
+        "longitude": "77.5945627",
+        "notifications_count": null,
+        "failover_device_state": null,
+        "site": {
+          "id": 1,
+          "name": "420",
+          "is_hub": false,
+          "location": "Bangalore, Karnataka, India"
+        },
+        "overall_status": "online"
       },
-      "City B": {
-        "Position": {
-          "Longitude": 6.11499,
-          "Latitude": 50.76891
-        }
+      {
+        "id": 4,
+        "hex_id": null,
+        "serial_no": "5184",
+        "s_number": "00:00:00:00:00:00:00:00:00:00:01:11:00:00:14:40",
+        "cnid": "98:6a:20:00",
+        "name": "5184",
+        "version": "10.0.5_R_9437027",
+        "authentication_successful": true,
+        "system_package_version": "10.0.5_R_9437027",
+        "quality_score": null,
+        "ul_capacity_score": null,
+        "dl_capacity_score": null,
+        "uptime": null,
+        "location": "Bangalore, Karnataka, India",
+        "latitude": "12.9715987",
+        "longitude": "77.5945627",
+        "notifications_count": null,
+        "failover_device_state": null,
+        "site": {
+          "id": 4,
+          "name": "5184",
+          "is_hub": true,
+          "location": "Bangalore, Karnataka, India"
+        },
+        "overall_status": "offline"
       },
-      "City C": {
-        "Position": {
-          "Longitude": 6.80592,
-          "Latitude": 51.53548
-        }
-      },
-      "City D": {
-        "Position": {
-          "Longitude": 9.50523,
-          "Latitude": 51.31991
-        }
-      },
-      "City E": {
-        "Position": {
-          "Longitude": 9.66089,
-          "Latitude": 48.70158
-        }
-      },
-      "City F": {
-        "Position": {
-          "Longitude": 9.93368,
-          "Latitude": 53.55608
-        }
-      },
-      "City G": {
-        "Position": {
-          "Longitude": 11.56122,
-          "Latitude": 48.14496
-        }
-      },
-      "City H": {
-        "Position": {
-          "Longitude": 13.34253,
-          "Latitude": 52.5319
-        }
-      },
-      "City I": {
-        "Position": {
-          "Longitude": 6.11327,
-          "Latitude": 50.77715
-        }
-      },
-      "City J": {
-        "Position": {
-          "Longitude": 13.36671,
-          "Latitude": 52.54344
-        }
+      {
+        "id": 7,
+        "hex_id": null,
+        "serial_no": "5689",
+        "s_number": "00:00:00:00:00:00:00:00:00:00:01:11:00:00:16:39",
+        "cnid": "98:6a:38:00",
+        "name": "5689",
+        "version": "10.0.4_R_d5bf061",
+        "authentication_successful": true,
+        "system_package_version": "10.0.4_R_d5bf061",
+        "quality_score": null,
+        "ul_capacity_score": null,
+        "dl_capacity_score": null,
+        "uptime": null,
+        "location": "Bangalore, Karnataka, India",
+        "latitude": "12.9715987",
+        "longitude": "77.5945627",
+        "notifications_count": null,
+        "failover_device_state": null,
+        "site": {
+          "id": 3,
+          "name": "5689",
+          "is_hub": false,
+          "location": "Bangalore, Karnataka, India"
+        },
+        "overall_status": "offline"
       }
-    }
-  }
+    ],
+    "ui_layouts": [
+      {
+        "id": 4538,
+        "layout_type": "map_zoom",
+        "layout_value": "{\"zoom\":18,\"bounds\":{\"_northEast\":{\"lat\":12.973205225597185,\"lng\":77.59786248207092},\"_southWest\":{\"lat\":12.97111421996436,\"lng\":77.59201526641844}}}",
+        "user_id": 5,
+        "created_at": "2020-03-11T05:47:16.000Z",
+        "updated_at": "2020-03-11T05:47:16.000Z"
+      }
+    ]
+  }]
 
   ngOnInit() {
-    // this.initMap();
     this.renderMap();
   }
 
-  //  initMap(){
-  //     // this.map = L.map('map', {
-  //     //   center: [39.8282, -98.5795],
-  //     //   zoom: 3
-  //     // });
-
-  //     const globalMap = L.map('map', {
-  //       zoomControl: true,
-  //       center: [28.7041, 77.1025],
-  //       maxZoom: 21,
-  //       minZoom: 4
-  //     }).setView([28.7041, 77.1025], 13);
-  //     globalMap.zoomControl.setPosition('bottomright');
-  //     const maplayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&hl=tr&x={x}&y={y}&z={z}', {
-  //       subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-  //       maxNativeZoom: 21,
-  //       zIndex: 0,
-  //       maxZoom: 21
-  //     }).addTo(globalMap);
-  //   }
-
-
 
   renderMap() {
+
     var tempData;
-    // document.getElementById("map").outerHTML = "";
+    // // document.getElementById("map").outerHTML = "";
     tempData = this.response;
-    // console.log(tempData)
     //For LeafLet chart 
-    const dataPoint = tempData.ions;
-    // console.log(dataPoint)
-    this.map = L.map("map")//.setView([12.9715987, 77.5945627], 12);
-    this.options = {
-      layers: [
-        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
-      ],
-      zoom: 4,
-      center: L.latLng({ lat: 12.9715987, lng: 77.5945627 }),
-      // center:L.map("map").setView([12.9715987, 77.5945627], 12)
-    };
-    // store all the coordinates in this array o be able to iterate over the markers array
-    let coordinates = [];
+    this.dataPoint = tempData[0].ions;
+    console.log(this.dataPoint)
 
-    // populate coordinates array with all the markers
-    for (let i = 0; i < dataPoint.length; i++) {
-      console.log(dataPoint.length);
-      coordinates.push([Number(dataPoint[i].latitude), Number(dataPoint[i].longitude)]);
+    for (const i in this.dataPoint) {
+      this.coordinates.push([(this.dataPoint[i].name),(this.dataPoint[i].location), Number(this.dataPoint[i].latitude), Number(this.dataPoint[i].longitude)]);
     };
-    // console.log(coordinates);
+    console.log(this.coordinates);
 
-    // visualize the markers on the map
-    for (let i = 0; i < coordinates.length; i++) {
-      L.marker(coordinates[i]).addTo(this.map)
-        .bindPopup("<b>Latitude:</b> " + coordinates[i][0] + " <b>Longitude:</b> " + coordinates[i][1]);
-    };
-    console.log(coordinates);
+    
+
+    var map = L.map('map').setView([12.2602, 77.1461], 8);
+    this.mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; ' + this.mapLink + ' Contributors',
+      maxZoom: 18,
+    }).addTo(map);
+
+    for (var i = 0; i < this.coordinates.length; i++) {
+      this.marker = new L.marker([this.coordinates[i][2], this.coordinates[i][3]]).addTo(map);
+      this.marker.bindPopup(this.coordinates[i][0]).openPopup();
+      this.marker.bindPopup(this.coordinates[i][1]).openPopup();
+    }
+
   }
 
 

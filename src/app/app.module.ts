@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { GchartsComponent } from './gcharts/gcharts.component';
 import { JschartsComponent } from './jscharts/jscharts.component';
 import { MapComponent } from './map/map.component';
+import { ChartjsdatalabelsComponent } from './chartjsdatalabels/chartjsdatalabels.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { MapComponent } from './map/map.component';
     GchartsComponent,
     JschartsComponent,
     MapComponent,
+    ChartjsdatalabelsComponent,
   ],
   imports: [
     BrowserModule,
